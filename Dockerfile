@@ -1,12 +1,16 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 5433
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["LinkShorter/LinkShorter.csproj", "LinkShorter/"]
+
+COPY ["src/LinkShorter.Api/LinkShorter.Api.csproj", "LinkShorter.Api/"]
+COPY ["src/LinkShorter.BL/LinkShorter.BL.csproj", "LinkShorter.BL/"]
+COPY ["src/LinkShorter.Domain/LinkShorter.Domain.csproj", "LinkShorter.Domain/"]
+COPY ["src/LinkShorter.Repository/LinkShorter.Repository.csproj", "LinkShorter.Repository/"]
+
 RUN dotnet restore "LinkShorter/LinkShorter.csproj"
 COPY . .
 WORKDIR "/src/LinkShorter"
